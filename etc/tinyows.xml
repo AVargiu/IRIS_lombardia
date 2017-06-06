@@ -4,7 +4,7 @@
 	log_level="1"
 >
 
-  <pg host="localhost" user="postgres" password="p0stgr3S" dbname="iris_base" port="5432"/>
+  <pg host="localhost" user="postgres" password="" dbname="iris_base" port="5432"/>
 
   <metadata name="TinyOWS Server" title="TinyOWS Server - Production Service" />
 
