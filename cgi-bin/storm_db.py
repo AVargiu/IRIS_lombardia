@@ -37,8 +37,8 @@ in_dsn = '127.0.0.1:iris_base'
 #in_user = 'radar'
 in_user = 'webgis'
 # password
-#in_password = 'radar09'
-in_password = 'webgis$2013%'
+
+in_password = ''
 
 
 fs = cgi.FieldStorage()
