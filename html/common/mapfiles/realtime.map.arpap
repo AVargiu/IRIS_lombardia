@@ -1,0 +1,284 @@
+
+
+LAYER
+  	NAME "storm3h"
+  	STATUS ON
+  	TYPE POINT
+  	CONNECTIONTYPE POSTGIS
+  	CONNECTION "host=localhost port=5432 dbname=iris_base user=webgis password=webgis$2013%"
+	PROCESSING "CLOSE_CONNECTION=DEFER"
+  	DATA "the_geom from realtime.g_dbstorm_3ore using unique id using srid=23032"
+  	#DATA "the_geom from realtime.g_dbstorm using unique gid2 using srid=23032"
+  	#DATA "the_geom from (SELECT id, data from realtime.g_dbstorm where data like '20110519%') as foo using unique id using srid=23032"
+	
+    PROJECTION
+		"init=epsg:23032"
+    END
+	EXTENT 200000 4500000 700000 5500000
+  	
+  	#SE SI USA LA VISTA DI 3ore RICORDARSI DI SPEGNERE IL FILTRO DI MAPSERVER!!!!#
+
+  	METADATA	
+	    "ows_title"			"storm"
+		"ows_featureid"		"id"
+		"ows_abstract"		"Temporali occorsi nelle ultime 3 ore"
+		"ows_srs"		"epsg:23032" ## REQUIRED, seems better if not 900913...
+		
+		"gml_include_items"     "all" ## Optional (serves all attributes for layer)
+		"queryable"		"true"
+		"wms_include_items"	"all"
+		"wms_feature_info_mime_type"		"text/html"
+					
+		#"wfs_title"             "storm_wfs" ##REQUIRED		
+		#"gml_featureid"         "id" ## REQUIRED		
+    END
+  	
+	DUMP true
+	TOLERANCE 5
+		
+  	#FILTERITEM 'vil'
+	#FILTER ("data" like '20110519%')		
+	CLASSITEM 'area'
+	CLASS
+        NAME 'nullA'
+        #EXPRESSION (([area] >= 0.1) AND ('[si]' eq '')) #per recuperare si anche quando èullo
+        STYLE
+            SYMBOL "circle"
+            SIZE 7.0
+            OUTLINECOLOR 0 0 0
+            COLOR 255 215 0
+        END
+    END		
+END #end layer storm3h
+
+
+LAYER
+  	NAME "ellipse3h"
+  	STATUS ON
+  	TYPE POLYGON
+  	CONNECTIONTYPE POSTGIS
+  	CONNECTION "host=localhost port=5432 dbname=iris_base user=webgis password=webgis$2013%"
+	PROCESSING "CLOSE_CONNECTION=DEFER"
+  	DATA "the_geom from realtime.ellipse_3ore using unique gid using srid=23032"
+	
+    PROJECTION
+		"init=epsg:23032"
+    END
+	EXTENT 200000 4500000 700000 5500000
+  	
+  	METADATA
+		"ows_title"		"ellipse"
+		"ows_featureid"		"gid"
+		"ows_srs"		"epsg:23032" ## REQUIRED, seems better if not 900913...
+		"ows_abstract"		"Ellisse dei temporali occorsi nelle ultime 3 ore"
+			
+		"gml_include_items"	"all" ## Optional (serves all attributes for layer)
+		"queryable"		"true"
+		#"wms_include_items"	"all"
+		#"wms_feature_info_mime_type" "text/html"
+    END
+  	
+	DUMP true
+	TOLERANCE 5
+		
+  	#FILTERITEM 'vil'
+	#FILTER ("data_num" > 201204190000)
+	CLASSITEM 'area'
+	CLASS
+        NAME 'ellipseA'
+        #EXPRESSION (([area] >= 0.1) AND ('[si]' eq '')) #per recuperare si anche quando èullo
+        STYLE
+            #SYMBOL "circle"
+            #SIZE 7.0
+            OUTLINECOLOR 0 0 0
+            COLOR 255 215 0
+        END
+    END
+END #end layer ellipse3h
+
+
+LAYER
+        NAME "forecast_envelope"
+        STATUS ON
+        TYPE POLYGON
+        CONNECTIONTYPE POSTGIS
+        CONNECTION "host=localhost port=5432 dbname=iris_base user=webgis password=webgis$2013%"
+        PROCESSING "CLOSE_CONNECTION=DEFER"
+        DATA "the_geom from realtime.forecast_envelope using unique gid using srid=23032"
+
+    PROJECTION
+                "init=epsg:23032"
+    END
+        EXTENT 200000 4500000 700000 5500000
+
+        METADATA
+	        "ows_title"             "forecast_envelope"
+                "ows_featureid"         "gid"
+                "ows_srs"               "epsg:23032" ## REQUIRED, seems better if not 900913...
+                "ows_abstract"          "Forecast del temporale: previsione a 1 ora"
+
+                "gml_include_items"     "all" ## Optional (serves all attributes for layer)
+                "queryable"             "true"
+                "wms_include_items"     "all"
+                "wms_feature_info_mime_type" "text/html"
+    END
+
+        DUMP true
+        TOLERANCE 5
+
+        #FILTERITEM 'dd'
+        #FILTER ("data" like '20110519%')
+        CLASSITEM 'vv'
+        CLASS
+        NAME 'forecast_envelope'
+        #EXPRESSION (([area] >= 0.1) AND ('[si]' eq '')) #per recuperare si anche quando èullo
+        STYLE
+            #SYMBOL "circle"
+            #SIZE 7.0
+            OUTLINECOLOR 0 0 0
+            COLOR 255 215 0
+        END
+    END
+END #end layer forecast_envelope
+  
+LAYER
+        NAME "spostamento"
+        STATUS ON
+        TYPE POLYGON
+        CONNECTIONTYPE POSTGIS
+        CONNECTION "host=localhost port=5432 dbname=iris_base user=webgis password=webgis$2013%"
+        PROCESSING "CLOSE_CONNECTION=DEFER"
+        DATA "the_geom from realtime.arrow_3ore using unique gid using srid=23032"
+
+    PROJECTION
+                "init=epsg:23032"
+    END
+        EXTENT 200000 4500000 700000 5500000
+
+        METADATA
+	        "ows_title"             "spostamento"
+                "ows_featureid"         "gid"
+                "ows_srs"               "epsg:23032" ## REQUIRED, seems better if not 900913...
+                "ows_abstract"          "Forecast del temporale: previsione a 1 ora"
+
+                "gml_include_items"     "all" ## Optional (serves all attributes for layer)
+                "queryable"             "true"
+                "wms_include_items"     "all"
+                "wms_feature_info_mime_type" "text/html"
+    END
+
+        DUMP true
+        TOLERANCE 5
+
+        #FILTERITEM 'dd'
+        #FILTER ("data" like '20110519%')
+        #CLASSITEM 'vv'
+        CLASS
+        NAME 'freccia_spostamento'
+        #EXPRESSION (([area] >= 0.1) AND ('[si]' eq '')) #per recuperare si anche quando èullo
+        STYLE
+            #SYMBOL "circle"
+            #SIZE 7.0
+            OUTLINECOLOR 0 0 0
+            COLOR 255 215 0
+        END
+    END
+END #end layer spostamento
+  
+LAYER
+  	NAME "path3h"
+  	STATUS ON
+  	TYPE LINE
+  	CONNECTIONTYPE POSTGIS
+  	CONNECTION "host=localhost port=5432 dbname=iris_base user=webgis password=webgis$2013%"
+	PROCESSING "CLOSE_CONNECTION=DEFER"
+  	DATA "the_geom from realtime.g_stormpath_3ore using unique id using srid=23032"
+  	# DATA "the_geom from realtime.g_pathstorm using unique id using srid=23032"
+  	
+	PROJECTION
+		"init=epsg:23032"
+    END
+	EXTENT 200000 4500000 700000 5500000
+	
+  	METADATA
+		"ows_title"			"path"
+		"ows_featureid"		"id"
+		"ows_srs"			"epsg:23032" ## REQUIRED, seems better if not 900913...
+		"ows_abstract"		"Percorsi dei temporali occorsi nelle ultime 3 ore"
+		
+		"gml_include_items"		"all" ## Optional (serves all attributes for layer)
+		"queryable"				"true"
+		"wms_include_items"		"all"
+		"wms_feature_info_mime_type" "text/html"
+    END
+		
+	DUMP true
+	TOLERANCE 5
+		
+  	#FILTERITEM 'vil'
+  	#FILTER '>3'
+	#FILTER ("data" like '20110519%')
+	CLASSITEM 'data'	
+	CLASS
+      		NAME 'path3hA'
+     		# EXPRESSION ( ([MAGNITUDO] >= -0.2) AND ([MAGNITUDO] <= 2) )
+       		STYLE
+       	  		#SYMBOL "crossX" 
+      	  		#SIZE 7.0 
+     	    		#OUTLINECOLOR 0 0 0
+    	     		COLOR 0 0 0
+    	     		WIDTH 2
+    	     		#LINECAP butt
+      			#PATTERN 10 0 10 END
+ 	 	END
+ 	END
+END #end layer path3h
+
+
+LAYER
+        NAME "temperatura"
+        STATUS ON
+        TYPE POINT
+        CONNECTIONTYPE POSTGIS
+        CONNECTION "host=localhost port=5432 dbname=ris_base user=webgis password=webgis$2013%"
+        PROCESSING "CLOSE_CONNECTION=DEFER" #sembra essere piu veloce da caricare come WFS...
+        #PROCESSING "ITEMS=dn"
+        DATA "the_geom from realtime.v_temperatura using unique gid using srid=23032"
+
+      PROJECTION
+                "init=epsg:23032"
+      END
+        EXTENT 300000 4600000 700000 5200000
+
+        METADATA
+                "ows_title"             "temperatura"
+                "ows_featureid"         "gid"
+                "ows_srs"               "epsg:23032" ## REQUIRED, seems better if not 900913...
+                "ows_abstract"          "Rete stazioni meteo idrografiche piemontesi Rupar con ultimo dato temperatura"
+
+                "gml_include_items"     "all" ## Optional (serves all attributes for layer)
+                "queryable"             "true"
+                "wms_include_items"     "all"
+                "wms_feature_info_mime_type" "text/html"
+      END
+
+        DUMP true
+        TOLERANCE 5
+
+        #FILTERITEM 'MAGNITUDO'
+        #FILTER (("dn" < 95) AND ("dn" >= 0))
+        #il valore -32 e' NODATA, ma fino a ZERO la sensibilitàel radar èrascurabile
+        CLASSITEM 'id_rete_monit'
+        CLASS
+              NAME 'rete_meteoidroA'
+              #EXPRESSION (([dn] < 95) AND ([dn] >= 0))
+              STYLE
+                  SYMBOL "circle"
+                  SIZE 7.0
+                  OUTLINECOLOR 255 0 0
+                  COLOR 255 215 0
+              END
+      END
+END #end layer temperatura
+
+

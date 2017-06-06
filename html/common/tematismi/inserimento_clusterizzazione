@@ -1,0 +1,17 @@
+var clust_temp_lm = new OpenLayers.Strategy.Cluster({
+    distance: 30 //pixel
+    , threshold: 2
+});      
+var style_temp_clust_lm = new OpenLayers.Style(
+    {   title: "${getTitle}",
+        label: "${getLabel}", labelAlign: "cm", fontWeight: "bold", fontFamily: "sans-serif", fontSize: 15
+        ,graphicName: "circle", fillColor: "${getFillColor}", fillOpacity: 0.8, strokeColor:"black", pointRadius: "${getRadius}", strokeWidth: "${getWidth}"
+    }
+    //A quanto pare il context non funzione se c'e una Rule
+    ,{context: context_temp_lm} //context dentro allo style
+);
+var styleMap_temp_clust_lm = new OpenLayers.StyleMap({
+    "default": style_temp_clust_lm,
+    "select": new OpenLayers.Style({fontSize: 19, pointRadius: 18, fillColor: "blue", fillOpacity: 0.8}),
+    "temporary": new OpenLayers.Style({pointRadius: 20, fontSize: 19, cursor: "pointer"})
+});
