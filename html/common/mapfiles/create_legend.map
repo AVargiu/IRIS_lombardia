@@ -1,0 +1,168 @@
+#Al momento, ottobre 2011, questo e' il file map piu' OTTIMIZZATO ch'io abbia concepito
+#Questo file map mi serve per creare le legende dey layer image che carico sul WebGIS GeoExt
+
+MAP
+  NAME "METEO"
+  # Map image size
+  SIZE 600 600
+  UNITS meters
+  STATUS ON
+
+  EXTENT 350000 4000000 1600000 7000000
+  SYMBOLSET 'symbols/symbols.txt'
+  PROJECTION
+		"init=epsg:900913"
+  END
+
+# LEGEND object
+LEGEND
+  STATUS ON
+  #KEYSIZE 18 12
+  # LABEL object
+  LABEL
+    TYPE BITMAP
+    SIZE MEDIUM
+	FONT Vera
+    COLOR 0 0 89
+  END
+  TEMPLATE "template/legend.html"  ### HTML template file
+END  
+
+  #SHAPEPATH 'C:\Program Files\OSGeo\MapGuide\Web\www\meteo\shpfile\'
+  SHAPEPATH '/var/www/html/webgis/meteo/shpfile/'
+
+  # Web interface definition. Only the template parameter is required to display a map. See MapServer documentation
+  WEB
+    # Set IMAGEPATH to the path where MapServer should write its output.
+    IMAGEPATH 'tmp/'
+
+    # Set IMAGEURL to the url that points to IMAGEPATH as defined in your web server configuration
+    IMAGEURL '/common/mapfiles/tmp/'
+
+    # WMS-WFS server settings
+    METADATA
+	"ows_enable_request"            "*"
+    END
+
+    # Template and header/footer settings
+    # Only the template parameter is required to display a map. See MapServer documentation
+	TEMPLATE 'template/map_template.html'
+  END
+  
+  
+#Qui metto le informazioni sul layer di vui voglio la legenda. Di fatto mi bastano le classi e il nome del layer
+LAYER
+  	NAME "legend_layer"
+  	STATUS ON
+  	TYPE POINT
+	DATA 'rain_legend-point'
+	
+	PROJECTION
+		"init=epsg:23032"
+	END
+	EXTENT 200000 4500000 7000000 5000000
+	
+  	METADATA
+		#TITOLO per la legenda
+		"title" "Cumulata 24 ore"
+	END
+  	
+	DUMP false
+	TOLERANCE 5		
+
+	#INCLUDE 'legend_txt/rainist_legend.txt'
+
+	CLASS
+                NAME '<10 mm'
+                STYLE
+                        SYMBOL "square"
+                        SIZE 7
+                        COLOR 224 255 255
+                END
+        END
+        CLASS
+                NAME '10-20 mm'
+                STYLE
+                        SYMBOL "square"
+                        SIZE 7
+                        COLOR 152 245 255
+                END
+        END
+        CLASS
+                NAME '20-40 mm'
+                STYLE
+                        SYMBOL "square"
+                        SIZE 7
+                        COLOR 0 245 255
+                END
+        END
+        CLASS
+                NAME '40-60 mm'
+                STYLE
+                        SYMBOL "square"
+                        SIZE 7
+                        COLOR 0 191 255
+                END
+        END
+        CLASS
+                NAME '60-80 mm'
+                STYLE
+                        SYMBOL "square"
+                        SIZE 7
+                        COLOR 30 144 255
+                END
+        END
+        CLASS
+                NAME '80-100 mm'
+                STYLE
+                        SYMBOL "square"
+                        SIZE 7
+                        COLOR 0 0 205
+                END
+        END
+        CLASS
+                NAME '100-150 mm'
+                STYLE
+                        SYMBOL "square"
+                        SIZE 7
+                        COLOR 72 61 139
+                END
+        END
+        CLASS
+                NAME '150-200 mm'
+                STYLE
+                        SYMBOL "square"
+                        SIZE 7
+                        COLOR 230 230 250
+                END
+        END
+        CLASS
+                NAME '200-250 mm'
+                STYLE
+                        SYMBOL "square"
+                        SIZE 7
+                        COLOR 238 174 238
+                END
+        END
+        CLASS
+                NAME '250-300 mm'
+                STYLE
+                        SYMBOL "square"
+                        SIZE 7
+                        COLOR 238 0 238
+                END
+        END
+        CLASS
+                NAME '>300 mm'
+                STYLE
+                        SYMBOL "square"
+                        SIZE 7
+                        COLOR 139 71 137
+                END
+        END
+
+END #end layer rain_shp-legend
+
+
+END #end of file map
+

@@ -1,0 +1,47 @@
+
+LAYER
+  	NAME "rete_meteoidro"
+  	STATUS ON
+  	TYPE POINT
+  	CONNECTIONTYPE POSTGIS
+  	CONNECTION "host=localhost port=5432 dbname=iris_base user=webgis password=webgis$2013%"
+	PROCESSING "CLOSE_CONNECTION=DEFER" #sembra essere piu veloce da caricare come WFS...
+	#PROCESSING "ITEMS=dn" 
+  	DATA "the_geom from dati_di_base.v_anagraficasensori using unique gid using srid=32632"
+	
+	PROJECTION
+		"init=epsg:32632"
+	END
+	EXTENT 300000 4600000 700000 5200000  	
+
+  	METADATA	
+		"ows_title"		"rete_meteoidro"
+		"ows_featureid"		"gid"
+		"ows_srs"		"epsg:32632" ## REQUIRED, seems better if not 900913...
+		"ows_abstract"		"Rete stazioni meteo idrografiche Arpa Lombardia"
+		
+		"gml_include_items"	"all" ## Optional (serves all attributes for layer)
+		"queryable"		"true"
+		"wms_include_items"	"all"
+		"wms_feature_info_mime_type" "text/html"
+        END
+  	
+	DUMP true
+	TOLERANCE 5
+		
+  	#FILTERITEM 'MAGNITUDO'
+        #FILTER ("flag_rupar" = 'S')
+	#il valore -32 e' NODATA, ma fino a ZERO la sensibilita' del radar e' trascurabile
+	CLASSITEM 'id_rete_monit'
+	CLASS
+        NAME 'rete_meteoidroA'
+        STYLE
+            SYMBOL "circle"
+            SIZE 7.0
+            OUTLINECOLOR 255 0 0
+            COLOR 255 215 0
+        END
+    END
+END #end layer rete_meteoidro
+
+

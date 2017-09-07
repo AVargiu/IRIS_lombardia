@@ -1,0 +1,125 @@
+<tinyows online_resource="http://localhost/cgi-bin/tinyows"
+	schema_dir="/usr/local/share/tinyows/schema/"
+	log="/tmp/tinyows.log"
+	log_level="1"
+>
+
+  <pg host="localhost" user="postgres" password="" dbname="iris_base" port="5432"/>
+
+  <metadata name="TinyOWS Server" title="TinyOWS Server - Production Service" />
+
+
+  <layer retrievable="1"
+         ns_prefix="tows"
+         ns_uri="http://www.tinyows.org/"
+         name="bacini"
+         schema="dati_di_base"
+         title="bacini"
+         srid="900913,3785,32632,23032"
+         abstract="Bacini idrografici"
+  />
+
+  <layer retrievable="1"
+         ns_prefix="tows"
+         ns_uri="http://www.tinyows.org/"
+         name="v_anagraficasensori"
+         schema="dati_di_base"
+         title="v_anagraficasensori"
+         srid="900913,3785,32632,23032"
+         abstract="Rete idronivometrica"
+  />
+
+  <layer retrievable="1"
+         ns_prefix="tows"
+         ns_uri="http://www.tinyows.org/"
+         name="aree_allerta"
+         schema="dati_di_base"
+         title="aree_allerta"
+         srid="900913,3785,32632,23032"
+         abstract="Aree di Allerta Idronivometeo"
+  />
+
+  <layer retrievable="1"
+         ns_prefix="tows"
+         ns_uri="http://www.tinyows.org/"
+         name="v_anagraficasensoriarpa"
+         schema="dati_di_base"
+         title="v_anagraficasensoriarpa"
+         srid="900913,3785,32632,23032"
+         abstract="Rete idronivometrica Lombardia ARPA"
+  />
+
+  <layer retrievable="1"
+         ns_prefix="tows"
+         ns_uri="http://www.tinyows.org/"
+         name="v_last_terma"
+         schema="realtime"
+         title="v_last_terma"
+         srid="900913,3785,32632,23032"
+         abstract="Ultimo dato di temperatura (media) registrato dalla rete Lombardia"
+  />
+
+  <layer retrievable="1"
+         ns_prefix="tows"
+         ns_uri="http://www.tinyows.org/"
+         name="v_last_idro"
+         schema="realtime"
+         title="v_last_idro"
+         srid="900913,3785,32632,23032"
+         abstract="Ultimo dato di livello idrometrico registrato dalla rete Lombardia"
+  />
+
+  <layer retrievable="1"
+         ns_prefix="tows"
+         ns_uri="http://www.tinyows.org/"
+         name="v_last_pluvio"
+         schema="realtime"
+         title="v_last_pluvio_lombardia"
+         srid="900913,3785,32632,23032"
+         abstract="Ultimo dato di precipitazione registrato dalla rete Lombardia"
+  />
+
+  <layer retrievable="1"
+         ns_prefix="tows"
+         ns_uri="http://www.tinyows.org/"
+         name="v_last_nivo"
+         schema="realtime"
+         title="v_last_nivo_lombardia"
+         srid="900913,3785,32632,23032"
+         abstract="Ultimo dato di livello neve registrato dalla rete Lombardia"
+  />
+
+  <layer retrievable="1"
+         ns_prefix="tows"
+         ns_uri="http://www.tinyows.org/"
+         name="v_last_raffica"
+         schema="realtime"
+         title="v_last_raffica_lombardia"
+         srid="900913,3785,32632,23032"
+         abstract="Ultimo dato di raffica di vento registrato dalla rete Lombardia"
+  />
+
+  <layer retrievable="1"
+         ns_prefix="tows"
+         ns_uri="http://www.tinyows.org/"
+         name="v_last_vento"
+         schema="realtime"
+         title="v_last_vento_lombardia"
+         srid="900913,3785,32632,23032"
+         abstract="Ultimo dato di raffica di vento registrato dalla rete Lombardia"
+  />
+
+  <layer retrievable="1"
+         ns_prefix="tows"
+         ns_uri="http://www.tinyows.org/"
+         srid="900913,3785,32632,23032"
+         schema="dati_di_base"
+         name="reticolo_idro_nw"
+         title="reticolo_idro_nw_tiny"
+         abstract="Reticolo_idrografico nazionale - NW Italia"
+         pkey="gid"
+  />
+
+
+</tinyows>
+

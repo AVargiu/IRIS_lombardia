@@ -1,0 +1,93 @@
+<html>
+<head>
+
+<script type="text/javascript" src="/jQuery/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="/jQuery/jquery-ui.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+
+<script  type="application/javascript">
+//per provare chiamate ajax e superare l'errore di Cross-Oriign Domain
+var url_meteo="http://www.arpa.piemonte.gov.it/radar/cgi-bin/get_jsonmeteo_dd.py";
+var cod_staz = '001192900';
+var data_i = 20141001;
+var data_f = 20151012;
+var graph_data; //inizializzazione data array per i grafici
+$(document).ready(function(){
+$.ajax({
+        url: url_meteo,
+        type: 'GET',
+        data: { codstaz: cod_staz, data_i: data_i, data_f: data_f },
+        //contentType: "application/json; charset=utf-8",
+	contentType: "application/javascript",
+	async:false,
+        //crossDomain:true,
+        dataType: 'jsonp',
+	cache: false,
+        success: function (response) {
+		console.log(response.length);
+                if (response!=0) {
+			var graph_data = []; //preparo l'array per HighCharts
+                        //console.log(response[0]); //Object {dati_dd: Array[367], codstaz: "001192900"}
+			//console.log(response[0]['dati_dd']);
+			console.log(response[0]['dati_dd'][0]); //Object {2014-10-06: Array[2]}
+			//console.log( Object.keys(response[0]['dati_dd'][0]) );
+			//var elemento_array = response[0]['dati_dd'][0];
+			$.each(response[0]['dati_dd'], function(key, value) {
+			  $.each(value, function(key2, value2) {
+			    var date = new Date(key2);
+			    var valore = parseFloat(value2[1]);
+			    graph_data.push([date, valore]);
+			  });
+			});
+			get_graphdata(graph_data);
+                }
+                else {
+                        console.log('nessun temporale');
+                }
+        },
+	error: function (xhr, textStatus, errorMessage) {
+                console.log(errorMessage);
+		console.log(xhr.status);
+            }
+});
+});
+
+function get_graphdata(graph_data) {
+  console.log(graph_data);
+
+$(function () {
+    $('#container').highcharts({
+        chart: {},
+        plotOptions: {
+            series: {
+                allowPointSelect: true
+            }
+        },
+	xAxis: {
+	  gridLineWidth: 1
+	  ,tickmarkPlacement: 'on'
+	  ,labels: {
+		formatter: function() {
+			return Highcharts.dateFormat('%d/%m/%y', this.value);// + '<br />' + Highcharts.dateFormat('%H:%M', this.value);
+		}
+	  }
+	},
+        series: [{
+            data: graph_data
+        }]
+    });
+});
+
+}
+
+
+</script>
+</head>
+
+<body>
+
+<div id="container" style="height: 400px"
+
+</body>
+
+</html>

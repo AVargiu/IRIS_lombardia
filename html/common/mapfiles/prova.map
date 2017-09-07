@@ -1,0 +1,48 @@
+
+LAYER
+        NAME "temperatura"
+        STATUS ON
+        TYPE POINT
+        CONNECTIONTYPE POSTGIS
+        CONNECTION "host=localhost port=5432 dbname=ris_base user=webgis password=webgis$2013%"
+        PROCESSING "CLOSE_CONNECTION=DEFER" #sembra essere piu veloce da caricare come WFS...
+        #PROCESSING "ITEMS=dn"
+        DATA "the_geom from realtime.v_last_terma using unique gid using srid=32632"
+
+      PROJECTION
+                "init=epsg:32632"
+      END
+        EXTENT 300000 4600000 700000 5200000
+
+        METADATA
+                "ows_title"             "temperatura"
+                "ows_featureid"         "gid"
+                "ows_srs"               "epsg:32632" ## REQUIRED, seems better if not 900913...
+                "ows_abstract"          "Rete stazioni meteo idrografiche lombarde con ultimo dato temperatura"
+
+                "gml_include_items"     "all" ## Optional (serves all attributes for layer)
+                "queryable"             "true"
+                "wms_include_items"     "all"
+                "wms_feature_info_mime_type" "text/html"
+      END
+
+        DUMP true
+        TOLERANCE 5
+
+        #FILTERITEM 'MAGNITUDO'
+        #FILTER (("dn" < 95) AND ("dn" >= 0))
+        #il valore -32 e' NODATA, ma fino a ZERO la sensibilitàel radar èrascurabile
+      CLASSITEM 'idsensore'
+      CLASS
+             NAME 'provaA'
+              #EXPRESSION (([dn] < 95) AND ([dn] >= 0))
+              STYLE
+                  SYMBOL "circle"
+                  SIZE 7.0
+                  OUTLINECOLOR 255 0 0
+                  COLOR 255 215 0
+              END
+      END
+END #end layer temperatura
+
+
